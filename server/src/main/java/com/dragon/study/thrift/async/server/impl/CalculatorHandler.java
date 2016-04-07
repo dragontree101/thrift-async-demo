@@ -17,15 +17,30 @@ public class CalculatorHandler implements ICalculator {
   }
 
   public void ping() {
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
     System.out.println("ping()");
   }
 
   public int add(int n1, int n2) {
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
     System.out.println("add(" + n1 + "," + n2 + ")");
     return n1 + n2;
   }
 
   public int calculate(int logid, Work work) throws InvalidOperation {
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
     System.out.println("calculate(" + logid + ", {" + work.op + "," + work.num1 + "," + work.num2 + "})");
     int val = 0;
     switch (work.op) {
@@ -63,6 +78,11 @@ public class CalculatorHandler implements ICalculator {
   }
 
   public SharedStruct getStruct(int key) {
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
     System.out.println("getStruct(" + key + ")");
     return log.get(key);
   }
