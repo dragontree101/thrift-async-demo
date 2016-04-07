@@ -9,6 +9,7 @@ import org.apache.thrift.TException;
 import org.apache.thrift.async.AsyncMethodCallback;
 import org.apache.thrift.async.TAsyncClientManager;
 import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.protocol.TProtocolFactory;
 import org.apache.thrift.transport.TNonblockingSocket;
 import org.apache.thrift.transport.TNonblockingTransport;
 
@@ -28,47 +29,48 @@ public class AsyncClientDemo {
       TNonblockingTransport transport4 = new TNonblockingSocket("localhost", 9090);
       TNonblockingTransport transport5 = new TNonblockingSocket("localhost", 9090);
 
-      Calculator.AsyncClient client1 = new Calculator.AsyncClient(new TBinaryProtocol.Factory(), new TAsyncClientManager(), transport1);
-      Calculator.AsyncClient client2 = new Calculator.AsyncClient(new TBinaryProtocol.Factory(), new TAsyncClientManager(), transport2);
-      Calculator.AsyncClient client3 = new Calculator.AsyncClient(new TBinaryProtocol.Factory(), new TAsyncClientManager(), transport3);
-      Calculator.AsyncClient client4 = new Calculator.AsyncClient(new TBinaryProtocol.Factory(), new TAsyncClientManager(), transport4);
-      Calculator.AsyncClient client5 = new Calculator.AsyncClient(new TBinaryProtocol.Factory(), new TAsyncClientManager(), transport5);
+      TProtocolFactory protocolFactory = new TBinaryProtocol.Factory();
+      TAsyncClientManager clientManager = new TAsyncClientManager();
       CountDownLatch latch = new CountDownLatch(5);
       System.out.println("Client start .....");
 
+      Calculator.AsyncClient client = new Calculator.AsyncClient(protocolFactory, clientManager, transport1);
       long startTime = System.currentTimeMillis();
       PingAsynCallback pingCallBack = new PingAsynCallback(latch);
       System.out.println("call method ping call start ...");
-      client1.ping(pingCallBack);
+      client.ping(pingCallBack);
       System.out.println("call method ping call  .... end");
+      transport1.close();
 
-
+      client = new Calculator.AsyncClient(protocolFactory, clientManager, transport2);
       AddAsynCallback addCallBack = new AddAsynCallback(latch);
       System.out.println("add method ping call start ...");
-      client2.add(1, 1, addCallBack);
+      client.add(1, 1, addCallBack);
       System.out.println("add method ping call  .... end");
-
 
       Work work = new Work();
       work.op = Operation.DIVIDE;
       work.num1 = 1;
       work.num2 = 0;
+      client = new Calculator.AsyncClient(protocolFactory, clientManager, transport3);
       CalculateAsynCallback calculateCallBack1 = new CalculateAsynCallback(latch);
       System.out.println("calculate method ping call start ...");
-      client3.calculate(1, work, calculateCallBack1);
+      client.calculate(1, work, calculateCallBack1);
       System.out.println("calculate method ping call  .... end");
 
       work.op = Operation.SUBTRACT;
       work.num1 = 15;
       work.num2 = 10;
+      client = new Calculator.AsyncClient(protocolFactory, clientManager, transport4);
       CalculateAsynCallback calculateCallBack2 = new CalculateAsynCallback(latch);
       System.out.println("calculate method ping call start ...");
-      client4.calculate(1, work, calculateCallBack2);
+      client.calculate(1, work, calculateCallBack2);
       System.out.println("calculate method ping call  .... end");
 
+      client = new Calculator.AsyncClient(protocolFactory, clientManager, transport5);
       GetStructAsynCallback getStructAsynCallback = new GetStructAsynCallback(latch);
       System.out.println("get struct method ping call start ...");
-      client5.getStruct(1, getStructAsynCallback);
+      client.getStruct(1, getStructAsynCallback);
       System.out.println("get struct method ping call  .... end");
 
       latch.await();
