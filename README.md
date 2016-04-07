@@ -1,1 +1,2 @@
 # thrift-async-demo
+简单的demo，模拟了thrift的server和client，其中client包括了同步客户端的使用方式和异步客户端的使用方式
