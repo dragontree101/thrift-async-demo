@@ -40,7 +40,6 @@ public class AsyncClientDemo {
       System.out.println("call method ping call start ...");
       client.ping(pingCallBack);
       System.out.println("call method ping call  .... end");
-      transport1.close();
 
       client = new Calculator.AsyncClient(protocolFactory, clientManager, transport2);
       AddAsynCallback addCallBack = new AddAsynCallback(latch);
