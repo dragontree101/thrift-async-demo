@@ -25,5 +25,10 @@
             <artifactId>api</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.dragon.study.bytebuddy</groupId>
+            <artifactId>myagent</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

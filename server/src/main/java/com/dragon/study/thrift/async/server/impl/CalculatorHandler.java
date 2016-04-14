@@ -1,14 +1,14 @@
 package com.dragon.study.thrift.async.server.impl;
 
 
-import com.dragon.study.thrift.async.api.ICalculator;
+import com.dragon.study.thrift.async.api.Calculator;
 import com.dragon.study.thrift.async.api.InvalidOperation;
 import com.dragon.study.thrift.async.api.SharedStruct;
 import com.dragon.study.thrift.async.api.Work;
 
 import java.util.HashMap;
 
-public class CalculatorHandler implements ICalculator {
+public class CalculatorHandler implements Calculator.Iface {
 
   private HashMap<Integer,SharedStruct> log;
 
